@@ -4,8 +4,7 @@ import Home from "./Home";
 import MusicApp from "./apps/MusicApp";
 import RobotApp from "./apps/RobotApp";
 import PhotoboxApp from "./apps/PhotoboxApp";
-import RundownApp, { HITA_RUNDOWN } from "./apps/RundownApp";
-import Rundown3D from "./apps/Rundown3D";
+import RundownApp from "./apps/RundownApp";
 import ChordLabApp from "./apps/ChordLabApp";
 import NewsApp from "./apps/NewsApp";
 import NewsCarousel from "./apps/NewsCarousel";
@@ -49,7 +48,7 @@ export default function HoloPlayer() {
   const [started, setStarted] = useState(true);
   const [booting, setBooting] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const [wsStatus, setWsStatus] = useState<"connecting" | "ready" | "disconnected">("disconnected");
+  const [_wsStatus, setWsStatus] = useState<"connecting" | "ready" | "disconnected">("disconnected");
   const startedRef = useRef(true);
   const trackingRef = useRef(false);
   const view = useSyncExternalStore(appView.sub, appView.get);

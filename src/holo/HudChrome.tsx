@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 export default function HudChrome() {
-  const [secVal, setSecVal] = useState(0);
+  const [_secVal, setSecVal] = useState(0);
 
   // Generate slight variance in numerical readouts to make it feel alive
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function HudChrome() {
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        justify: "space-between",
+        justifyContent: "space-between",
         zIndex: 2,
       }}>
         {/* Futuristic scanline overlay */}

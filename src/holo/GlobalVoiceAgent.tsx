@@ -4,7 +4,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { appView } from "./appStore";
-import { speak, askLive } from "./voiceBridge";
+import { askLive } from "./voiceBridge";
 import type { ChatMessage } from "./ravaAi";
 import { toggleTrack, pauseTrack, playTrack, isPlaying } from "./audio";
 import { tracks } from "./tracks";

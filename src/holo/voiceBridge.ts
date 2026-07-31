@@ -29,50 +29,7 @@ let ws: WebSocket | null = null;
 let wsState: WsState = "disconnected";
 let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
 
-// ─── Web Audio Context for playing server-streamed WAV ───────────────────────
-let _audioCtx: AudioContext | null = null;
-function _getAudioCtx(): AudioContext {
-  if (!_audioCtx || _audioCtx.state === "closed") {
-    _audioCtx = new AudioContext();
-  }
-  return _audioCtx;
-}
 
-function _playBase64Audio(base64: string, mimeType: string): Promise<void> {
-  return new Promise((resolve) => {
-    try {
-      const binary = atob(base64);
-      const bytes = new Uint8Array(binary.length);
-      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-      
-      const blob = new Blob([bytes], { type: mimeType || "audio/wav" });
-      const url = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      
-      audio.onended = () => {
-        URL.revokeObjectURL(url);
-        resolve();
-      };
-      audio.onerror = (e) => {
-        console.warn("[voiceBridge] Audio playback error:", e);
-        URL.revokeObjectURL(url);
-        resolve();
-      };
-      
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch((err) => {
-          console.warn("[voiceBridge] Autoplay prevented:", err);
-          URL.revokeObjectURL(url);
-          resolve();
-        });
-      }
-    } catch (err) {
-      console.warn("[voiceBridge] _playBase64Audio error:", err);
-      resolve();
-    }
-  });
-}
 
 /** Subscribers notified when wsState changes. */
 type StatusListener = (s: WsState) => void;
